@@ -10,25 +10,109 @@ import Products from "./pages/Products";
 import CustomerDashboard from "./pages/CustomerDashboard";
 import AssistantDashboard from "./pages/AssistantDashboard";
 import OwnerDashboard from "./pages/OwnerDashboard";
+import AddProduct from "./pages/AddProduct";
+import ManageProducts from "./pages/ManageProducts";
+import EditProduct from "./pages/EditProduct";
+import AllOrders from "./pages/AllOrders";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Navbar />
+  <BrowserRouter>
+    <Navbar />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/my-orders" element={<MyOrders />}/>
-        <Route path="/register" element={<Register />}/>
-        <Route path="/product/:id" element={<Products />} />
-        <Route path="/dashboard" element={<CustomerDashboard />} />
-        <Route path="/assistant-dashboard" element={<AssistantDashboard />} />
-        <Route path="/owner-dashboard" element={<OwnerDashboard />} />
-      </Routes>
-    </BrowserRouter>
-  );
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+
+      <Route
+        path="/cart"
+        element={
+          <ProtectedRoute allowedRoles={["customer"]}>
+            <Cart />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/my-orders"
+        element={
+          <ProtectedRoute allowedRoles={["customer"]}>
+            <MyOrders />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="/register" element={<Register />} />
+      <Route path="/product/:id" element={<Products />} />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={["customer"]}>
+            <CustomerDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/assistant-dashboard"
+        element={
+          <ProtectedRoute allowedRoles={["assistant"]}>
+            <AssistantDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/owner-dashboard"
+        element={
+          <ProtectedRoute allowedRoles={["owner"]}>
+            <OwnerDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/add-product"
+        element={
+          <ProtectedRoute allowedRoles={["owner"]}>
+            <AddProduct />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/manage-products"
+        element={
+          <ProtectedRoute allowedRoles={["owner"]}>
+            <ManageProducts />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/edit-product/:id"
+        element={
+          <ProtectedRoute allowedRoles={["owner"]}>
+            <EditProduct />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/all-orders"
+        element={
+          <ProtectedRoute
+            allowedRoles={["assistant", "owner"]}
+          >
+            <AllOrders />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  </BrowserRouter>
+);
 }
 
 export default App;

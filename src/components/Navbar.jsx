@@ -6,6 +6,7 @@ function Navbar() {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
   const [cartCount, setCartCount] = useState(0);
 
@@ -74,40 +75,79 @@ useEffect(() => {
 
         {token ? (
           <>
-           <Link
-             to="/cart"
-             style={{
-             color: "white",
-             textDecoration: "none",
-            }}
-            >
-            Cart ({cartCount})
-            </Link>
+  {role === "customer" && (
+    <>
+      <Link
+        to="/dashboard"
+        style={{
+          color: "white",
+          textDecoration: "none",
+        }}
+      >
+        Dashboard
+      </Link>
 
-            <Link
-              to="/my-orders"
-              style={{
-                color: "white",
-                textDecoration: "none",
-              }}
-            >
-              My Orders
-            </Link>
+      <Link
+        to="/cart"
+        style={{
+          color: "white",
+          textDecoration: "none",
+        }}
+      >
+        Cart ({cartCount})
+      </Link>
 
-            <button
-              onClick={handleLogout}
-              style={{
-                background: "transparent",
-                color: "white",
-                border: "1px solid white",
-                padding: "6px 12px",
-                cursor: "pointer",
-                borderRadius: "5px",
-              }}
-            >
-              Logout
-            </button>
-          </>
+      <Link
+        to="/my-orders"
+        style={{
+          color: "white",
+          textDecoration: "none",
+        }}
+      >
+        My Orders
+      </Link>
+    </>
+  )}
+
+  {role === "assistant" && (
+    <Link
+      to="/assistant-dashboard"
+      style={{
+        color: "white",
+        textDecoration: "none",
+      }}
+    >
+      Assistant Dashboard
+    </Link>
+  )}
+
+  {role === "owner" && (
+    <Link
+      to="/owner-dashboard"
+      style={{
+        color: "white",
+        textDecoration: "none",
+      }}
+    >
+      Owner Dashboard
+    </Link>
+  )}
+
+  <button
+    onClick={handleLogout}
+    style={{
+      background: "transparent",
+      color: "white",
+      border: "1px solid white",
+      padding: "6px 12px",
+      cursor: "pointer",
+      borderRadius: "5px",
+    }}
+  >
+    Logout
+  </button>
+</>
+       
         ) : (
           <>
             <Link
