@@ -16,11 +16,18 @@ function Login() {
         password,
       });
 
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("role", response.data.role);
+    const userRole = response.data.role;
 
-      alert("Login successful!");
-      navigate("/");
+localStorage.setItem("token", response.data.token);
+localStorage.setItem("role", userRole);
+
+if (userRole === "owner") {
+  navigate("/owner-dashboard");
+} else if (userRole === "assistant") {
+  navigate("/assistant-dashboard");
+} else {
+  navigate("/dashboard");
+}
     } catch (error) {
       alert(
         error.response?.data?.message || "Login failed"
@@ -85,6 +92,12 @@ function Login() {
         >
           Login
         </button>
+
+       <p style={{ marginTop: "15px", textAlign: "center" }}>
+  Don't have an account?{" "}
+  <a href="/register">Register here</a>
+</p>
+
       </form>
     </div>
   );

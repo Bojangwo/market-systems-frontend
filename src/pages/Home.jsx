@@ -5,6 +5,8 @@ import API, { IMAGE_URL } from "../services/api";
 
 function Home() {
   const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,9 +23,75 @@ function Home() {
     fetchProducts();
   }, []);
 
+const filteredProducts = products.filter((product) => {
+  const matchesSearch =
+    product.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+  const matchesCategory =
+    selectedCategory === "All" ||
+    product.category === selectedCategory;
+
+  return matchesSearch && matchesCategory;
+});
+
   return (
     <div>
       <Hero />
+
+      <div
+  style={{
+    textAlign: "center",
+    margin: "30px 0",
+  }}
+>
+  <input
+    type="text"
+    placeholder="🔍 Search products..."
+    value={searchTerm}
+    onChange={(e) => setSearchTerm(e.target.value)}
+    style={{
+      width: "300px",
+      padding: "12px",
+      borderRadius: "8px",
+      border: "1px solid #ccc",
+      fontSize: "16px",
+    }}
+  />
+</div>
+
+<div
+  style={{
+    textAlign: "center",
+    marginBottom: "20px",
+  }}
+>
+  <label
+    style={{
+      marginRight: "10px",
+      fontWeight: "bold",
+    }}
+  >
+    Category:
+  </label>
+
+  <select
+    value={selectedCategory}
+    onChange={(e) => setSelectedCategory(e.target.value)}
+    style={{
+      padding: "10px",
+      borderRadius: "5px",
+      fontSize: "16px",
+    }}
+  >
+    <option value="All">All</option>
+    <option value="Food">Food</option>
+    <option value="Drinks">Drinks</option>
+    <option value="Fruits">Fruits</option>
+    <option value="Vegetables">Vegetables</option>
+  </select>
+</div>
 
       <section style={{ padding: "50px 30px", textAlign: "center" }}>
         <h2 style={{ marginBottom: "30px" }}>Featured Products</h2>
@@ -36,7 +104,7 @@ function Home() {
             flexWrap: "wrap",
           }}
         >
-          {products.map((product) => {
+          {filteredProducts.map((product) => {
             // handle missing images safely
             const imageUrl = product.image
               ? `${IMAGE_URL}/${product.image}`

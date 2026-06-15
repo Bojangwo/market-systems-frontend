@@ -1,4 +1,5 @@
 import API from "../services/api";
+import { Link } from "react-router-dom";
 
 function ProductCard({ id, image, name, price }) {
   const handleAddToCart = async () => {
@@ -31,28 +32,36 @@ function ProductCard({ id, image, name, price }) {
         paddingBottom: "15px",
       }}
     >
-      <img
-        src={image}
-        alt={name}
-        style={{
-          width: "100%",
-          height: "200px",
-          objectFit: "cover",
-        }}
-      />
+      <Link
+  to={`/product/${id}`}
+  style={{
+    textDecoration: "none",
+    color: "inherit",
+  }}
+>
+  <img
+    src={image}
+    alt={name}
+    style={{
+      width: "100%",
+      height: "200px",
+      objectFit: "cover",
+    }}
+  />
 
-      <h3 style={{ margin: "15px 0 10px" }}>
-        {name}
-      </h3>
+  <h3 style={{ margin: "15px 0 10px" }}>
+    {name}
+  </h3>
 
-      <p
-        style={{
-          color: "#2e7d32",
-          fontWeight: "bold",
-        }}
-      >
-        D{price}
-      </p>
+  <p
+    style={{
+      color: "#2e7d32",
+      fontWeight: "bold",
+    }}
+  >
+    D{price}
+  </p>
+</Link>
 
       <button
         onClick={handleAddToCart}
