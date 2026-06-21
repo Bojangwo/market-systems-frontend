@@ -46,146 +46,103 @@ useEffect(() => {
     navigate("/login");
   };
 
-  return (
-    <nav
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "15px 30px",
-        backgroundColor: "#2e7d32",
-        color: "white",
-      }}
-    >
-      <h2>Organic Market</h2>
-
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          alignItems: "center",
-        }}
+return (
+  <nav className="sticky top-0 z-50 bg-green-700 shadow-lg">
+    <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <Link
+        to="/"
+        className="text-2xl font-bold text-white hover:text-green-100 transition"
       >
+        🌿 Organic Market
+      </Link>
+
+      <div className="flex items-center gap-6">
         <Link
           to="/"
-          style={{ color: "white", textDecoration: "none" }}
+          className="text-white hover:text-green-200 transition"
         >
           Home
         </Link>
 
         {token ? (
           <>
-  {role === "customer" && (
-    <>
-      <Link
-        to="/dashboard"
-        style={{
-          color: "white",
-          textDecoration: "none",
-        }}
-      >
-        Dashboard
-      </Link>
+            {role === "customer" && (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="text-white hover:text-green-200 transition"
+                >
+                  Dashboard
+                </Link>
 
-      <Link
-        to="/cart"
-        style={{
-          color: "white",
-          textDecoration: "none",
-        }}
-      >
-        Cart ({cartCount})
-      </Link>
+                <Link
+                  to="/cart"
+                  className="relative text-white hover:text-green-200 transition"
+                >
+                  Cart
 
-      <Link
-        to="/my-orders"
-        style={{
-          color: "white",
-          textDecoration: "none",
-        }}
-      >
-        My Orders
-      </Link>
-    </>
-  )}
+                  {cartCount > 0 && (
+                    <span className="absolute -top-3 -right-5 bg-red-500 text-white text-xs rounded-full px-2 py-1">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
 
-  {role === "assistant" && (
-    <Link
-      to="/assistant-dashboard"
-      style={{
-        color: "white",
-        textDecoration: "none",
-      }}
-    >
-      Assistant Dashboard
-    </Link>
-  )}
+                <Link
+                  to="/my-orders"
+                  className="text-white hover:text-green-200 transition"
+                >
+                  My Orders
+                </Link>
+              </>
+            )}
 
-  {role === "owner" && (
-    <Link
-      to="/owner-dashboard"
-      style={{
-        color: "white",
-        textDecoration: "none",
-      }}
-    >
-      Owner Dashboard
-    </Link>
-  )}
+            {role === "assistant" && (
+              <Link
+                to="/assistant-dashboard"
+                className="text-white hover:text-green-200 transition"
+              >
+                Assistant Dashboard
+              </Link>
+            )}
 
-  <button
-    onClick={handleLogout}
-    style={{
-      background: "transparent",
-      color: "white",
-      border: "1px solid white",
-      padding: "6px 12px",
-      cursor: "pointer",
-      borderRadius: "5px",
-    }}
-  >
-    Logout
-  </button>
-</>
-       
+            {role === "owner" && (
+              <Link
+                to="/owner-dashboard"
+                className="text-white hover:text-green-200 transition"
+              >
+                Owner Dashboard
+              </Link>
+            )}
+
+            <button
+              onClick={handleLogout}
+              className="bg-white text-green-700 px-4 py-2 rounded-lg font-semibold hover:bg-green-100 transition"
+            >
+              Logout
+            </button>
+          </>
         ) : (
           <>
             <Link
               to="/login"
-              style={{
-                color: "white",
-                textDecoration: "none",
-              }}
+              className="text-white hover:text-green-200 transition"
             >
               Login
             </Link>
 
             <Link
               to="/register"
-              style={{
-                color: "white",
-                textDecoration: "none",
-              }}
+              className="bg-white text-green-700 px-4 py-2 rounded-lg font-semibold hover:bg-green-100 transition"
             >
               Register
             </Link>
-
-            <Link
-  to="/dashboard"
-  style={{
-    color: "white",
-    textDecoration: "none",
-  }}
->
-  Dashboard
-</Link>
           </>
-          
         )}
       </div>
-
-    </nav>
-  );
+    </div>
+  </nav>
+);
 }
 
 export default Navbar;

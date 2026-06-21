@@ -38,27 +38,21 @@ const filteredProducts = products.filter((product) => {
 
   return (
     <div>
+
       <Hero />
 
-      <div
-  style={{
-    textAlign: "center",
-    margin: "30px 0",
-  }}
->
-  <input
-    type="text"
-    placeholder="🔍 Search products..."
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    style={{
-      width: "300px",
-      padding: "12px",
-      borderRadius: "8px",
-      border: "1px solid #ccc",
-      fontSize: "16px",
-    }}
-  />
+      <div className="bg-white py-10">
+  <div className="max-w-xl mx-auto px-4">
+    <input
+      type="text"
+      placeholder="🔍 Search fresh products..."
+      value={searchTerm}
+      onChange={(e) =>
+        setSearchTerm(e.target.value)
+      }
+      className="w-full border border-gray-300 rounded-xl px-5 py-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+    />
+  </div>
 </div>
 
 <div
@@ -93,38 +87,40 @@ const filteredProducts = products.filter((product) => {
   </select>
 </div>
 
-      <section style={{ padding: "50px 30px", textAlign: "center" }}>
-        <h2 style={{ marginBottom: "30px" }}>Featured Products</h2>
+      <section className="bg-gray-50 py-16">
+  <div className="max-w-7xl mx-auto px-6">
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "30px",
-            flexWrap: "wrap",
-          }}
-        >
-          {filteredProducts.map((product) => {
-            // handle missing images safely
-            const imageUrl = product.image
-              ? `${IMAGE_URL}/${product.image}`
-              : "https://via.placeholder.com/300";
+    <h2 className="text-4xl font-bold text-center text-gray-800 mb-4">
+      Featured Products
+    </h2>
 
-            return (
-              <ProductCard
-                key={product._id}
-                id={product._id}
-                image={imageUrl}
-                name={product.name}
-                price={product.price}
-              />
-    
-            );
-          })}
-        </div>
-      </section>
+    <p className="text-center text-gray-600 mb-12">
+      Fresh products carefully selected for your family.
+    </p>
+
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 justify-items-center">
+      {filteredProducts.map((product) => {
+        const imageUrl = product.image
+          ? `${IMAGE_URL}/${product.image}`
+          : "https://images.unsplash.com/photo-1542838132-92c53300491e";
+
+        return (
+          <ProductCard
+            key={product._id}
+            id={product._id}
+            image={imageUrl}
+            name={product.name}
+            price={product.price}
+          />
+        );
+      })}
+    </div>
+
+  </div>
+</section>
     </div>
   );
+  
 }
 
 export default Home;

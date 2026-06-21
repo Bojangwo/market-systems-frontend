@@ -1,6 +1,50 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import API from "../services/api";
 
 function OwnerDashboard() {
+
+  const [totalProducts, setTotalProducts] = useState(0);
+const [totalOrders, setTotalOrders] = useState(0);
+const [totalRevenue, setTotalRevenue] = useState(0);
+
+useEffect(() => {
+  const fetchStats = async () => {
+    try {
+      const productsResponse =
+        await API.get("/products");
+
+      const ordersResponse =
+        await API.get("/orders");
+
+      setTotalProducts(
+        productsResponse.data.products.length
+      );
+
+      setTotalOrders(
+        ordersResponse.data.length
+      );
+
+      const revenue =
+        ordersResponse.data.reduce(
+          (total, order) =>
+            total + order.totalAmount,
+          0
+        );
+
+      setTotalRevenue(revenue);
+
+    } catch (error) {
+      console.error(
+        "Error loading dashboard stats:",
+        error
+      );
+    }
+  };
+
+  fetchStats();
+}, []);
+
   return (
     <div
       style={{
@@ -18,14 +62,56 @@ function OwnerDashboard() {
         Owner Dashboard
       </h1>
 
-      <p
-        style={{
-          textAlign: "center",
-          marginBottom: "40px",
-          fontSize: "18px",
-        }}
-      >
-        Manage products, orders, and store activities.
+      <p>
+        <div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    gap: "20px",
+    flexWrap: "wrap",
+    marginBottom: "40px",
+  }}
+>
+  <div
+    style={{
+      width: "220px",
+      padding: "20px",
+      background: "#e8f5e9",
+      borderRadius: "10px",
+      textAlign: "center",
+    }}
+  >
+    <h3>Total Products</h3>
+    <h1>{totalProducts}</h1>
+  </div>
+
+  <div
+    style={{
+      width: "220px",
+      padding: "20px",
+      background: "#e3f2fd",
+      borderRadius: "10px",
+      textAlign: "center",
+    }}
+  >
+    <h3>Total Orders</h3>
+    <h1>{totalOrders}</h1>
+  </div>
+
+  <div
+    style={{
+      width: "220px",
+      padding: "20px",
+      background: "#fff3e0",
+      borderRadius: "10px",
+      textAlign: "center",
+    }}
+  >
+    <h3>Total Revenue</h3>
+    <h1>D{totalRevenue}</h1>
+  </div>
+</div>
+       
       </p>
 
       <div

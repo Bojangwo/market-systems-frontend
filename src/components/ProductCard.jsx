@@ -21,64 +21,42 @@ function ProductCard({ id, image, name, price }) {
   };
 
   return (
-    <div
-      style={{
-        width: "250px",
-        backgroundColor: "white",
-        borderRadius: "10px",
-        overflow: "hidden",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-        textAlign: "center",
-        paddingBottom: "15px",
-      }}
+  <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition duration-300 w-72">
+    <Link
+      to={`/product/${id}`}
+      className="block"
     >
-      <Link
-  to={`/product/${id}`}
-  style={{
-    textDecoration: "none",
-    color: "inherit",
-  }}
->
-  <img
-    src={image}
-    alt={name}
-    style={{
-      width: "100%",
-      height: "200px",
-      objectFit: "cover",
-    }}
-  />
+      <img
+        src={image}
+        alt={name}
+        className="w-full h-56 object-cover"
+      />
 
-  <h3 style={{ margin: "15px 0 10px" }}>
-    {name}
-  </h3>
+      <div className="p-5">
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          {name}
+        </h3>
 
-  <p
-    style={{
-      color: "#2e7d32",
-      fontWeight: "bold",
-    }}
-  >
-    D{price}
-  </p>
-</Link>
+        <p className="text-2xl font-bold text-green-700">
+          D{price}
+        </p>
 
+        <p className="text-yellow-500 mt-2">
+          ⭐⭐⭐⭐⭐
+        </p>
+      </div>
+    </Link>
+
+    <div className="px-5 pb-5">
       <button
         onClick={handleAddToCart}
-        style={{
-          marginTop: "10px",
-          padding: "10px 20px",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
+        className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
       >
-        Add to Cart
+        Add To Cart
       </button>
     </div>
-  );
+  </div>
+);
 }
 
 export default ProductCard;

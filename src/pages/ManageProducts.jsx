@@ -4,6 +4,8 @@ import API, { IMAGE_URL } from "../services/api";
 
 function ManageProducts() {
   const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] =
+  useState("All");
 
   const fetchProducts = async () => {
     try {
@@ -41,6 +43,23 @@ function ManageProducts() {
     }
   };
 
+  const filteredProducts =
+  selectedCategory === "All"
+    ? products
+    : products.filter(
+        (product) =>
+          product.category === selectedCategory
+      );
+
+      const categories = [
+  "All",
+  ...new Set(
+    products
+      .map((product) => product.category)
+      .filter(Boolean)
+  ),
+];
+
   return (
     <div
       style={{
@@ -60,6 +79,29 @@ function ManageProducts() {
       </h1>
 
       <div
+  style={{
+    textAlign: "center",
+    marginBottom: "30px",
+  }}
+>
+  <select
+  value={selectedCategory}
+  onChange={(e) =>
+    setSelectedCategory(e.target.value)
+  }
+>
+  {categories.map((category) => (
+    <option
+      key={category}
+      value={category}
+    >
+      {category}
+    </option>
+  ))}
+</select>
+</div>
+
+      <div
         style={{
           display: "grid",
           gridTemplateColumns:
@@ -67,10 +109,11 @@ function ManageProducts() {
           gap: "20px",
         }}
       >
-        {products.map((product) => {
+        {filteredProducts.map((product) =>  {
           const imageUrl = product.image
             ? `${IMAGE_URL}/${product.image}`
             : "https://via.placeholder.com/300";
+            
 
           return (
             <div

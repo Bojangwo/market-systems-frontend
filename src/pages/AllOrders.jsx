@@ -3,6 +3,8 @@ import API from "../services/api";
 
 function AllOrders() {
   const [orders, setOrders] = useState([]);
+  const [selectedStatus, setSelectedStatus] =
+  useState("All");
 
   const fetchOrders = async () => {
     try {
@@ -35,6 +37,14 @@ function AllOrders() {
     }
   };
 
+  const filteredOrders =
+  selectedStatus === "All"
+    ? orders
+    : orders.filter(
+        (order) =>
+          order.status === selectedStatus
+      );
+
   return (
     <div
       style={{
@@ -53,12 +63,71 @@ function AllOrders() {
         All Orders
       </h1>
 
-      {orders.length === 0 ? (
+      <div
+  style={{
+    textAlign: "center",
+    marginBottom: "30px",
+  }}
+>
+<div
+  style={{
+    display: "flex",
+    justifyContent: "center",
+    gap: "20px",
+    marginBottom: "20px",
+    flexWrap: "wrap",
+  }}
+>
+  <div>Pending: {orders.filter(o => o.status === "Pending").length}</div>
+
+  <div>Processing: {orders.filter(o => o.status === "Processing").length}</div>
+
+  <div>Delivered: {orders.filter(o => o.status === "Delivered").length}</div>
+</div>
+
+  <select
+    value={selectedStatus}
+    onChange={(e) =>
+      setSelectedStatus(e.target.value)
+    }
+    style={{
+      padding: "10px",
+      borderRadius: "8px",
+      fontSize: "16px",
+    }}
+  >
+    <option value="All">
+      All Orders
+    </option>
+
+    <option value="Pending">
+      Pending
+    </option>
+
+    <option value="Processing">
+      Processing
+    </option>
+
+    <option value="Out For Delivery">
+      Out For Delivery
+    </option>
+
+    <option value="Delivered">
+      Delivered
+    </option>
+
+    <option value="Cancelled">
+      Cancelled
+    </option>
+  </select>
+</div>
+
+      {filteredOrders.length === 0 ? (
         <h3 style={{ textAlign: "center" }}>
           No orders found.
         </h3>
       ) : (
-        orders.map((order) => (
+        filteredOrders.map((order) => (
           <div
             key={order._id}
             style={{
@@ -101,6 +170,7 @@ function AllOrders() {
                 marginTop: "15px",
               }}
             >
+
               <select
   value={order.status}
   onChange={(e) =>

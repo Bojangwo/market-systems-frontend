@@ -36,71 +36,85 @@ if (userRole === "owner") {
   };
 
   return (
+  <div className="min-h-screen flex">
+    
+    {/* Left Side */}
     <div
+      className="hidden md:flex md:w-1/2 bg-cover bg-center"
       style={{
-        maxWidth: "400px",
-        margin: "50px auto",
-        padding: "20px",
-        background: "white",
-        borderRadius: "10px",
-        boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1542838132-92c53300491e')",
       }}
     >
-      <h2 style={{ textAlign: "center" }}>Login</h2>
+      <div className="w-full bg-black/40 flex items-center justify-center">
+        <div className="text-center text-white px-10">
+          <h1 className="text-5xl font-bold mb-4">
+            Welcome Back
+          </h1>
 
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) =>
-            setEmail(e.target.value)
-          }
-          required
-          style={{
-            width: "100%",
-            padding: "10px",
-            margin: "10px 0",
-          }}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) =>
-            setPassword(e.target.value)
-          }
-          required
-          style={{
-            width: "100%",
-            padding: "10px",
-            margin: "10px 0",
-          }}
-        />
-
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "10px",
-            backgroundColor: "#4CAF50",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-          }}
-        >
-          Login
-        </button>
-
-       <p style={{ marginTop: "15px", textAlign: "center" }}>
-  Don't have an account?{" "}
-  <a href="/register">Register here</a>
-</p>
-
-      </form>
+          <p className="text-xl">
+            Fresh organic products delivered to your
+            doorstep.
+          </p>
+        </div>
+      </div>
     </div>
-  );
+
+    {/* Right Side */}
+    <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md">
+
+        <h2 className="text-3xl font-bold text-center text-green-700 mb-8">
+          Login
+        </h2>
+
+        <form onSubmit={handleLogin}>
+
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+            required
+            className="w-full border rounded-xl px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+            required
+            className="w-full border rounded-xl px-4 py-3 mb-6 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-xl font-semibold transition"
+          >
+            Login
+          </button>
+
+          <p className="text-center mt-6 text-gray-600">
+            Don't have an account?
+
+            <a
+              href="/register"
+              className="text-green-700 font-semibold ml-2"
+            >
+              Register
+            </a>
+          </p>
+
+        </form>
+      </div>
+    </div>
+  </div>
+);
 }
 
 export default Login;
