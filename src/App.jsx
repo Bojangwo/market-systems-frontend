@@ -1,4 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -16,103 +21,147 @@ import EditProduct from "./pages/EditProduct";
 import AllOrders from "./pages/AllOrders";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+function MainApp() {
+  const location = useLocation();
+
+  const hideNavbar =
+    location.pathname === "/login" ||
+    location.pathname === "/register";
+
+  return (
+    <>
+      {!hideNavbar && <Navbar />}
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+
+        <Route
+          path="/product/:id"
+          element={<Products />}
+        />
+
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute
+              allowedRoles={["customer"]}
+            >
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/my-orders"
+          element={
+            <ProtectedRoute
+              allowedRoles={["customer"]}
+            >
+              <MyOrders />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute
+              allowedRoles={["customer"]}
+            >
+              <CustomerDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/assistant-dashboard"
+          element={
+            <ProtectedRoute
+              allowedRoles={["assistant"]}
+            >
+              <AssistantDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/owner-dashboard"
+          element={
+            <ProtectedRoute
+              allowedRoles={["owner"]}
+            >
+              <OwnerDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/add-product"
+          element={
+            <ProtectedRoute
+              allowedRoles={["owner"]}
+            >
+              <AddProduct />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/manage-products"
+          element={
+            <ProtectedRoute
+              allowedRoles={["owner"]}
+            >
+              <ManageProducts />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/edit-product/:id"
+          element={
+            <ProtectedRoute
+              allowedRoles={["owner"]}
+            >
+              <EditProduct />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/all-orders"
+          element={
+            <ProtectedRoute
+              allowedRoles={[
+                "assistant",
+                "owner",
+              ]}
+            >
+              <AllOrders />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </>
+  );
+}
+
 function App() {
   return (
-  <BrowserRouter>
-    <Navbar />
-
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-
-      <Route
-        path="/cart"
-        element={
-          <ProtectedRoute allowedRoles={["customer"]}>
-            <Cart />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/my-orders"
-        element={
-          <ProtectedRoute allowedRoles={["customer"]}>
-            <MyOrders />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route path="/register" element={<Register />} />
-      <Route path="/product/:id" element={<Products />} />
-
-      <Route
-        path="/dashboard"
-        element={
-          <ProtectedRoute allowedRoles={["customer"]}>
-            <CustomerDashboard />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/assistant-dashboard"
-        element={
-          <ProtectedRoute allowedRoles={["assistant"]}>
-            <AssistantDashboard />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/owner-dashboard"
-        element={
-          <ProtectedRoute allowedRoles={["owner"]}>
-            <OwnerDashboard />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/add-product"
-        element={
-          <ProtectedRoute allowedRoles={["owner"]}>
-            <AddProduct />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/manage-products"
-        element={
-          <ProtectedRoute allowedRoles={["owner"]}>
-            <ManageProducts />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/edit-product/:id"
-        element={
-          <ProtectedRoute allowedRoles={["owner"]}>
-            <EditProduct />
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path="/all-orders"
-        element={
-          <ProtectedRoute
-            allowedRoles={["assistant", "owner"]}
-          >
-            <AllOrders />
-          </ProtectedRoute>
-        }
-      />
-    </Routes>
-  </BrowserRouter>
-);
+    <BrowserRouter>
+      <MainApp />
+    </BrowserRouter>
+  );
 }
 
 export default App;

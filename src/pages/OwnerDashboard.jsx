@@ -46,141 +46,96 @@ useEffect(() => {
 }, []);
 
   return (
-    <div
-      style={{
-        maxWidth: "1000px",
-        margin: "40px auto",
-        padding: "30px",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-          color: "#2e7d32",
-        }}
-      >
-        Owner Dashboard
+  <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 p-8">
+    <div className="max-w-7xl mx-auto">
+
+      <h1 className="text-5xl font-bold text-center text-green-700 mb-3">
+        Store Owner Dashboard
       </h1>
 
-      <p>
-        <div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    gap: "20px",
-    flexWrap: "wrap",
-    marginBottom: "40px",
-  }}
->
-  <div
-    style={{
-      width: "220px",
-      padding: "20px",
-      background: "#e8f5e9",
-      borderRadius: "10px",
-      textAlign: "center",
-    }}
-  >
-    <h3>Total Products</h3>
-    <h1>{totalProducts}</h1>
-  </div>
-
-  <div
-    style={{
-      width: "220px",
-      padding: "20px",
-      background: "#e3f2fd",
-      borderRadius: "10px",
-      textAlign: "center",
-    }}
-  >
-    <h3>Total Orders</h3>
-    <h1>{totalOrders}</h1>
-  </div>
-
-  <div
-    style={{
-      width: "220px",
-      padding: "20px",
-      background: "#fff3e0",
-      borderRadius: "10px",
-      textAlign: "center",
-    }}
-  >
-    <h3>Total Revenue</h3>
-    <h1>D{totalRevenue}</h1>
-  </div>
-</div>
-       
+      <p className="text-center text-gray-600 text-lg mb-10">
+        Monitor products, orders and business performance.
       </p>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "30px",
-          flexWrap: "wrap",
-        }}
-      >
-        <Link
-          to="/add-product"
-          style={{ textDecoration: "none" }}
-        >
-          <div
-            style={{
-              width: "220px",
-              padding: "25px",
-              background: "#f5f5f5",
-              borderRadius: "10px",
-              textAlign: "center",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3>➕ Add Product</h3>
-            <p>Create a new product.</p>
-          </div>
-        </Link>
+      {/* Statistics Cards */}
+      <div className="grid md:grid-cols-3 gap-6 mb-12">
 
-        <Link
-          to="/manage-products"
-          style={{ textDecoration: "none" }}
-        >
-          <div
-            style={{
-              width: "220px",
-              padding: "25px",
-              background: "#f5f5f5",
-              borderRadius: "10px",
-              textAlign: "center",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3>📦 Manage Products</h3>
-            <p>Edit or delete products.</p>
-          </div>
-        </Link>
+        <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:scale-105 transition">
+          <h3 className="text-gray-500 mb-2">
+            Total Products
+          </h3>
 
-        <Link
-          to="/all-orders"
-          style={{ textDecoration: "none" }}
-        >
-          <div
-            style={{
-              width: "220px",
-              padding: "25px",
-              background: "#f5f5f5",
-              borderRadius: "10px",
-              textAlign: "center",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3>📋 View Orders</h3>
-            <p>Manage customer orders.</p>
-          </div>
-        </Link>
+          <h1 className="text-4xl font-bold text-green-600">
+            {totalProducts}
+          </h1>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:scale-105 transition">
+          <h3 className="text-gray-500 mb-2">
+            Total Orders
+          </h3>
+
+          <h1 className="text-4xl font-bold text-blue-600">
+            {totalOrders}
+          </h1>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-lg p-6 text-center hover:scale-105 transition">
+          <h3 className="text-gray-500 mb-2">
+            Revenue
+          </h3>
+
+          <h1 className="text-4xl font-bold text-orange-500">
+            D{totalRevenue}
+          </h1>
+        </div>
+
       </div>
+
+      {/* Action Cards */}
+      <div className="grid md:grid-cols-3 gap-8">
+
+        <Link to="/add-product">
+          <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl hover:-translate-y-2 transition">
+            <h2 className="text-2xl font-bold text-green-700 mb-3">
+              ➕ Add Product
+            </h2>
+
+            <p className="text-gray-600">
+              Create and publish new products.
+            </p>
+          </div>
+        </Link>
+
+        <Link to="/manage-products">
+          <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl hover:-translate-y-2 transition">
+            <h2 className="text-2xl font-bold text-green-700 mb-3">
+              📦 Manage Products
+            </h2>
+
+            <p className="text-gray-600">
+              Update inventory and pricing.
+            </p>
+          </div>
+        </Link>
+
+        <Link to="/all-orders">
+          <div className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-2xl hover:-translate-y-2 transition">
+            <h2 className="text-2xl font-bold text-green-700 mb-3">
+              📋 View Orders
+            </h2>
+
+            <p className="text-gray-600">
+              Monitor and process customer orders.
+            </p>
+          </div>
+        </Link>
+
+      </div>
+
     </div>
-  );
+  </div>
+);
 }
 
 export default OwnerDashboard;

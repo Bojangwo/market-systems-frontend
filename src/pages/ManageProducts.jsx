@@ -1,193 +1,109 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import API, { IMAGE_URL } from "../services/api";
+return (
+  <div className="min-h-screen bg-gray-100 p-8">
 
-function ManageProducts() {
-  const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] =
-  useState("All");
+    <div className="max-w-7xl mx-auto">
 
-  const fetchProducts = async () => {
-    try {
-      const response = await API.get("/products");
-      setProducts(response.data.products);
-    } catch (error) {
-      console.error("Error loading products:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const handleDelete = async (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this product?"
-    );
-
-    if (!confirmDelete) return;
-
-    try {
-      await API.delete(`/products/${id}`);
-
-      alert("Product deleted successfully!");
-
-      // Refresh product list
-      fetchProducts();
-    } catch (error) {
-      console.error(error);
-      alert(
-        error.response?.data?.message ||
-          "Failed to delete product."
-      );
-    }
-  };
-
-  const filteredProducts =
-  selectedCategory === "All"
-    ? products
-    : products.filter(
-        (product) =>
-          product.category === selectedCategory
-      );
-
-      const categories = [
-  "All",
-  ...new Set(
-    products
-      .map((product) => product.category)
-      .filter(Boolean)
-  ),
-];
-
-  return (
-    <div
-      style={{
-        maxWidth: "1200px",
-        margin: "40px auto",
-        padding: "20px",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-          color: "#2e7d32",
-          marginBottom: "30px",
-        }}
-      >
-        Manage Products
+      <h1 className="text-5xl font-bold text-center text-green-700 mb-3">
+        Product Inventory
       </h1>
 
-      <div
-  style={{
-    textAlign: "center",
-    marginBottom: "30px",
-  }}
->
-  <select
-  value={selectedCategory}
-  onChange={(e) =>
-    setSelectedCategory(e.target.value)
-  }
->
-  {categories.map((category) => (
-    <option
-      key={category}
-      value={category}
-    >
-      {category}
-    </option>
-  ))}
-</select>
-</div>
+      <p className="text-center text-gray-600 mb-10">
+        Manage all products in your supermarket.
+      </p>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns:
-            "repeat(auto-fit, minmax(250px, 1fr))",
-          gap: "20px",
-        }}
-      >
-        {filteredProducts.map((product) =>  {
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-10">
+
+        <h3 className="font-semibold mb-3">
+          Filter By Category
+        </h3>
+
+        <select
+          value={selectedCategory}
+          onChange={(e) =>
+            setSelectedCategory(e.target.value)
+          }
+          className="border rounded-xl p-3 w-full md:w-72"
+        >
+          {categories.map((category) => (
+            <option
+              key={category}
+              value={category}
+            >
+              {category}
+            </option>
+          ))}
+        </select>
+
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        {filteredProducts.map((product) => {
+
           const imageUrl = product.image
             ? `${IMAGE_URL}/${product.image}`
             : "https://via.placeholder.com/300";
-            
 
           return (
             <div
               key={product._id}
-              style={{
-                border: "1px solid #ddd",
-                borderRadius: "10px",
-                padding: "15px",
-                textAlign: "center",
-                boxShadow:
-                  "0 2px 8px rgba(0,0,0,0.1)",
-              }}
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition"
             >
               <img
                 src={imageUrl}
                 alt={product.name}
-                style={{
-                  width: "100%",
-                  height: "180px",
-                  objectFit: "cover",
-                  borderRadius: "8px",
-                }}
+                className="w-full h-56 object-cover"
               />
 
-              <h3>{product.name}</h3>
+              <div className="p-5">
 
-              <p>
-                <strong>D{product.price}</strong>
-              </p>
+                <h2 className="font-bold text-xl mb-2">
+                  {product.name}
+                </h2>
 
-              <p>Stock: {product.stock}</p>
+                <p className="text-green-700 font-bold text-lg">
+                  D{product.price}
+                </p>
 
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  gap: "10px",
-                  marginTop: "15px",
-                }}
-              >
-                <Link
-                  to={`/edit-product/${product._id}`}
-                >
-                  <button
-                    style={{
-                      padding: "8px 12px",
-                      cursor: "pointer",
-                    }}
+                <p className="text-gray-600 mt-2">
+                  Stock: {product.stock}
+                </p>
+
+                <p className="text-gray-500 text-sm mt-1">
+                  {product.category}
+                </p>
+
+                <div className="flex gap-3 mt-5">
+
+                  <Link
+                    to={`/edit-product/${product._id}`}
+                    className="flex-1"
                   >
-                    Edit
-                  </button>
-                </Link>
+                    <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                      Edit
+                    </button>
+                  </Link>
 
-                <button
-                  onClick={() =>
-                    handleDelete(product._id)
-                  }
-                  style={{
-                    padding: "8px 12px",
-                    background: "#d32f2f",
-                    color: "white",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  Delete
-                </button>
+                  <button
+                    onClick={() =>
+                      handleDelete(product._id)
+                    }
+                    className="flex-1 bg-red-600 text-white py-2 rounded-lg hover:bg-red-700"
+                  >
+                    Delete
+                  </button>
+
+                </div>
+
               </div>
+
             </div>
           );
         })}
-      </div>
-    </div>
-  );
-}
 
-export default ManageProducts;
+      </div>
+
+    </div>
+
+  </div>
+);

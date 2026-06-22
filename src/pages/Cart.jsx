@@ -81,114 +81,143 @@ const handleCheckout = async () => {
 };
 
   return (
-    <div style={{ padding: "30px" }}>
-      <h2>Your Shopping Cart</h2>
+  <div className="min-h-screen bg-gray-50 py-10 px-6">
+    <div className="max-w-6xl mx-auto">
+
+      <h1 className="text-4xl font-bold text-center text-green-700 mb-10">
+        Shopping Cart
+      </h1>
 
       {cartItems.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
+          <h2 className="text-2xl font-semibold text-gray-700">
+            Your cart is empty
+          </h2>
+
+          <p className="text-gray-500 mt-3">
+            Browse products and add items to your cart.
+          </p>
+        </div>
       ) : (
-        <>
-          {cartItems.map((item) => (
-            <div
-              key={item.product._id}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "20px",
-                margin: "20px 0",
-                padding: "15px",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-              }}
-            >
-              <img
-                src={
-                  item.product.image
-                    ? `${IMAGE_URL}/${item.product.image}`
-                    : "https://via.placeholder.com/100"
-                }
-                alt={item.product.name}
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  objectFit: "cover",
-                }}
-              />
+        <div className="grid lg:grid-cols-3 gap-8">
 
-              <div>
-                <h3>{item.product.name}</h3>
-                <p>Price: D{item.product.price}</p>
-                <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-  <button
-    onClick={() =>
-      updateQuantity(
-        item.product._id,
-        item.quantity - 1
-      )
-    }
-  >
-    -
-  </button>
+          {/* Cart Items */}
+          <div className="lg:col-span-2 space-y-6">
 
-  <span>{item.quantity}</span>
+            {cartItems.map((item) => (
+              <div
+                key={item.product._id}
+                className="bg-white rounded-2xl shadow-md p-5 flex gap-5 items-center"
+              >
+                <img
+                  src={
+                    item.product.image
+                      ? `${IMAGE_URL}/${item.product.image}`
+                      : "https://via.placeholder.com/150"
+                  }
+                  alt={item.product.name}
+                  className="w-28 h-28 rounded-xl object-cover"
+                />
 
-  <button
-    onClick={() =>
-      updateQuantity(
-        item.product._id,
-        item.quantity + 1
-      )
-    }
-  >
-    +
-  </button>
-</div>
-                <p>
-                  Subtotal: D
-                  
-                  {item.product.price * item.quantity}
-                </p>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold">
+                    {item.product.name}
+                  </h3>
+
+                  <p className="text-green-700 font-bold mt-2">
+                    D{item.product.price}
+                  </p>
+
+                  <div className="flex items-center gap-4 mt-4">
+                    <button
+                      onClick={() =>
+                        updateQuantity(
+                          item.product._id,
+                          item.quantity - 1
+                        )
+                      }
+                      className="bg-gray-200 px-3 py-1 rounded-lg"
+                    >
+                      -
+                    </button>
+
+                    <span className="font-semibold">
+                      {item.quantity}
+                    </span>
+
+                    <button
+                      onClick={() =>
+                        updateQuantity(
+                          item.product._id,
+                          item.quantity + 1
+                        )
+                      }
+                      className="bg-gray-200 px-3 py-1 rounded-lg"
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <p className="mt-4 text-gray-700">
+                    Subtotal:
+                    <span className="font-bold ml-2">
+                      D
+                      {item.product.price *
+                        item.quantity}
+                    </span>
+                  </p>
+                </div>
+
                 <button
-  onClick={() => handleRemove(item.product._id)}
-  style={{
-    marginTop: "10px",
-    padding: "8px 15px",
-    backgroundColor: "#d32f2f",
-    color: "white",
-    border: "none",
-    cursor: "pointer",
-    borderRadius: "5px",
-  }}
->
-  Remove
-</button>
+                  onClick={() =>
+                    handleRemove(item.product._id)
+                  }
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg"
+                >
+                  Remove
+                </button>
               </div>
+            ))}
+          </div>
+
+          {/* Order Summary */}
+          <div className="bg-white rounded-2xl shadow-md p-6 h-fit sticky top-24">
+
+            <h2 className="text-2xl font-bold mb-6">
+              Order Summary
+            </h2>
+
+            <div className="flex justify-between mb-4">
+              <span>Total Items</span>
+
+              <span>
+                {cartItems.reduce(
+                  (total, item) =>
+                    total + item.quantity,
+                  0
+                )}
+              </span>
             </div>
-          ))}
 
-          <div style={{ marginTop: "20px" }}>
-  <h3>Total: D{totalPrice}</h3>
+            <div className="flex justify-between text-xl font-bold mb-8">
+              <span>Total</span>
 
-  <button
-    onClick={handleCheckout}
-    style={{
-      marginTop: "15px",
-      padding: "12px 25px",
-      backgroundColor: "#2e7d32",
-      color: "white",
-      border: "none",
-      borderRadius: "5px",
-      cursor: "pointer",
-      fontSize: "16px",
-    }}
-  >
-    Checkout
-  </button>
-</div>
-        </>
+              <span>D{totalPrice}</span>
+            </div>
+
+            <button
+              onClick={handleCheckout}
+              className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-semibold transition"
+            >
+              Checkout
+            </button>
+
+          </div>
+        </div>
       )}
     </div>
-  );
+  </div>
+);
 }
 
 export default Cart;

@@ -2,80 +2,50 @@ import { Link } from "react-router-dom";
 
 function AssistantDashboard() {
   return (
-    <div
-      style={{
-        maxWidth: "900px",
-        margin: "40px auto",
-        padding: "30px",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-          color: "#1976d2",
-        }}
-      >
+  <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 p-8">
+
+    <div className="max-w-5xl mx-auto">
+
+      <h1 className="text-5xl font-bold text-center text-blue-700 mb-3">
         Assistant Dashboard
       </h1>
 
-      <p
-        style={{
-          textAlign: "center",
-          marginBottom: "40px",
-          fontSize: "18px",
-        }}
-      >
-        Manage customer orders and daily store operations.
+      <p className="text-center text-gray-600 mb-10">
+        Manage daily orders and customer requests.
       </p>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "30px",
-          flexWrap: "wrap",
-        }}
-      >
-        <Link
-          to="/all-orders"
-          style={{ textDecoration: "none" }}
-        >
-          <div
-            style={{
-              width: "220px",
-              padding: "25px",
-              background: "#f5f5f5",
-              borderRadius: "10px",
-              textAlign: "center",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3>📋 View Orders</h3>
-            <p>View all customer orders.</p>
+      <div className="grid md:grid-cols-2 gap-8">
+
+        <Link to="/all-orders">
+          <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition">
+            <h2 className="text-2xl font-bold text-blue-700 mb-3">
+              📋 View Orders
+            </h2>
+
+            <p className="text-gray-600">
+              See all customer orders.
+            </p>
           </div>
         </Link>
 
-        <Link
-          to="/all-orders"
-          style={{ textDecoration: "none" }}
-        >
-          <div
-            style={{
-              width: "220px",
-              padding: "25px",
-              background: "#f5f5f5",
-              borderRadius: "10px",
-              textAlign: "center",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3>🔄 Update Status</h3>
-            <p>Change order status.</p>
+        <Link to="/all-orders">
+          <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition">
+            <h2 className="text-2xl font-bold text-blue-700 mb-3">
+              🔄 Update Status
+            </h2>
+
+            <p className="text-gray-600">
+              Update order progress.
+            </p>
           </div>
         </Link>
+
       </div>
+
     </div>
-  );
+
+  </div>
+);
 }
 
 export default AssistantDashboard;

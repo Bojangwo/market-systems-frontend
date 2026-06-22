@@ -46,170 +46,220 @@ function AllOrders() {
       );
 
   return (
-    <div
-      style={{
-        maxWidth: "1200px",
-        margin: "40px auto",
-        padding: "20px",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-          color: "#2e7d32",
-          marginBottom: "30px",
-        }}
-      >
-        All Orders
+  <div className="min-h-screen bg-gray-100 py-10 px-6">
+    <div className="max-w-7xl mx-auto">
+
+      <h1 className="text-5xl font-bold text-center text-green-700 mb-3">
+        Order Management
       </h1>
 
-      <div
-  style={{
-    textAlign: "center",
-    marginBottom: "30px",
-  }}
->
-<div
-  style={{
-    display: "flex",
-    justifyContent: "center",
-    gap: "20px",
-    marginBottom: "20px",
-    flexWrap: "wrap",
-  }}
->
-  <div>Pending: {orders.filter(o => o.status === "Pending").length}</div>
+      <p className="text-center text-gray-600 mb-10">
+        View and manage customer orders.
+      </p>
 
-  <div>Processing: {orders.filter(o => o.status === "Processing").length}</div>
+      {/* Statistics */}
+      <div className="grid md:grid-cols-3 gap-6 mb-10">
 
-  <div>Delivered: {orders.filter(o => o.status === "Delivered").length}</div>
-</div>
+        <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+          <h3 className="text-gray-500">
+            Pending Orders
+          </h3>
 
-  <select
-    value={selectedStatus}
-    onChange={(e) =>
-      setSelectedStatus(e.target.value)
-    }
-    style={{
-      padding: "10px",
-      borderRadius: "8px",
-      fontSize: "16px",
-    }}
-  >
-    <option value="All">
-      All Orders
-    </option>
+          <h1 className="text-4xl font-bold text-yellow-500 mt-2">
+            {orders.filter(
+              (o) => o.status === "Pending"
+            ).length}
+          </h1>
+        </div>
 
-    <option value="Pending">
-      Pending
-    </option>
+        <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+          <h3 className="text-gray-500">
+            Processing
+          </h3>
 
-    <option value="Processing">
-      Processing
-    </option>
+          <h1 className="text-4xl font-bold text-blue-500 mt-2">
+            {orders.filter(
+              (o) => o.status === "Processing"
+            ).length}
+          </h1>
+        </div>
 
-    <option value="Out For Delivery">
-      Out For Delivery
-    </option>
+        <div className="bg-white rounded-2xl shadow-lg p-6 text-center">
+          <h3 className="text-gray-500">
+            Delivered
+          </h3>
 
-    <option value="Delivered">
-      Delivered
-    </option>
+          <h1 className="text-4xl font-bold text-green-600 mt-2">
+            {orders.filter(
+              (o) => o.status === "Delivered"
+            ).length}
+          </h1>
+        </div>
 
-    <option value="Cancelled">
-      Cancelled
-    </option>
-  </select>
-</div>
+      </div>
+
+      {/* Filter */}
+      <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+
+        <h3 className="font-semibold mb-3">
+          Filter Orders
+        </h3>
+
+        <select
+          value={selectedStatus}
+          onChange={(e) =>
+            setSelectedStatus(e.target.value)
+          }
+          className="border rounded-xl p-3 w-full md:w-72"
+        >
+          <option value="All">All Orders</option>
+          <option value="Pending">Pending</option>
+          <option value="Processing">Processing</option>
+          <option value="Out For Delivery">
+            Out For Delivery
+          </option>
+          <option value="Delivered">
+            Delivered
+          </option>
+          <option value="Cancelled">
+            Cancelled
+          </option>
+        </select>
+
+      </div>
 
       {filteredOrders.length === 0 ? (
-        <h3 style={{ textAlign: "center" }}>
-          No orders found.
-        </h3>
+        <div className="bg-white rounded-2xl shadow-lg p-10 text-center">
+          <h2 className="text-2xl font-semibold">
+            No orders found.
+          </h2>
+        </div>
       ) : (
-        filteredOrders.map((order) => (
-          <div
-            key={order._id}
-            style={{
-              border: "1px solid #ddd",
-              borderRadius: "10px",
-              padding: "20px",
-              marginBottom: "20px",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-            }}
-          >
-            <h3>
-              Customer:{" "}
-              {order.customer?.fullname || "Unknown"}
-            </h3>
+        <div className="space-y-6">
 
-            <p>
-              <strong>Total:</strong> D
-              {order.totalAmount}
-            </p>
-
-            <p>
-              <strong>Status:</strong>{" "}
-              {order.status}
-            </p>
-
-            <h4>Items:</h4>
-
-            <ul>
-              {order.items.map((item) => (
-                <li key={item._id}>
-                  {item.product?.name || "Product"} -
-                  Quantity: {item.quantity} -
-                  Price: D{item.price}
-                </li>
-              ))}
-            </ul>
-
+          {filteredOrders.map((order) => (
             <div
-              style={{
-                marginTop: "15px",
-              }}
+              key={order._id}
+              className="bg-white rounded-2xl shadow-lg p-6"
             >
 
-              <select
-  value={order.status}
-  onChange={(e) =>
-    updateStatus(
-      order._id,
-      e.target.value
-    )
-  }
-  style={{
-    padding: "8px",
-    borderRadius: "5px",
-  }}
->
-  <option value="Pending">
-    Pending
-  </option>
+              <div className="flex flex-col md:flex-row md:justify-between gap-4">
 
-  <option value="Processing">
-    Processing
-  </option>
+                <div>
+                  <h2 className="text-2xl font-bold text-green-700">
+                    {order.customer?.fullname ||
+                      "Unknown Customer"}
+                  </h2>
 
-  <option value="Out For Delivery">
-    Out For Delivery
-  </option>
+                  <p className="text-gray-600 mt-1">
+                    Total Amount:
+                    <span className="font-semibold ml-2">
+                      D{order.totalAmount}
+                    </span>
+                  </p>
+                </div>
 
-  <option value="Delivered">
-    Delivered
-  </option>
+                <div>
+                  <span
+                    className={`px-4 py-2 rounded-full text-white text-sm font-semibold
+                    ${
+                      order.status === "Pending"
+                        ? "bg-yellow-500"
+                        : order.status === "Processing"
+                        ? "bg-blue-500"
+                        : order.status === "Out For Delivery"
+                        ? "bg-purple-500"
+                        : order.status === "Delivered"
+                        ? "bg-green-600"
+                        : "bg-red-500"
+                    }`}
+                  >
+                    {order.status}
+                  </span>
+                </div>
 
-  <option value="Cancelled">
-    Cancelled
-  </option>
-</select>
+              </div>
+
+              <div className="mt-6">
+
+                <h3 className="font-semibold mb-3">
+                  Ordered Items
+                </h3>
+
+                <div className="space-y-3">
+
+                  {order.items.map((item) => (
+                    <div
+                      key={item._id}
+                      className="bg-gray-100 rounded-xl p-3 flex flex-col md:flex-row md:justify-between"
+                    >
+                      <span>
+                        {item.product?.name ||
+                          "Product"}
+                      </span>
+
+                      <span>
+                        Qty: {item.quantity}
+                      </span>
+
+                      <span>
+                        D{item.price}
+                      </span>
+                    </div>
+                  ))}
+
+                </div>
+
+              </div>
+
+              <div className="mt-6">
+
+                <label className="block mb-2 font-semibold">
+                  Update Status
+                </label>
+
+                <select
+                  value={order.status}
+                  onChange={(e) =>
+                    updateStatus(
+                      order._id,
+                      e.target.value
+                    )
+                  }
+                  className="border rounded-xl p-3 w-full md:w-72"
+                >
+                  <option value="Pending">
+                    Pending
+                  </option>
+
+                  <option value="Processing">
+                    Processing
+                  </option>
+
+                  <option value="Out For Delivery">
+                    Out For Delivery
+                  </option>
+
+                  <option value="Delivered">
+                    Delivered
+                  </option>
+
+                  <option value="Cancelled">
+                    Cancelled
+                  </option>
+                </select>
+
+              </div>
+
             </div>
-          </div>
-        ))
+          ))}
+
+        </div>
       )}
+
     </div>
-  );
+  </div>
+);
 }
 
 export default AllOrders;
