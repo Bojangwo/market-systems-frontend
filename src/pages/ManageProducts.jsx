@@ -1,3 +1,66 @@
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import API, { IMAGE_URL } from "../services/api";
+
+function ManageProducts() {
+  const [products, setProducts] = useState([]);
+
+  const [selectedCategory, setSelectedCategory] =
+  useState("All");
+
+const filteredProducts =
+  selectedCategory === "All"
+    ? products
+    : products.filter(
+        (product) =>
+          product.category === selectedCategory
+      );
+
+const categories = [
+  "All",
+  ...new Set(
+    products
+      .map((product) => product.category)
+      .filter(Boolean)
+  ),
+];
+
+  const fetchProducts = async () => {
+    try {
+      const response = await API.get("/products");
+      setProducts(response.data.products);
+    } catch (error) {
+      console.error("Error loading products:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this product?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await API.delete(`/products/${id}`);
+
+      alert("Product deleted successfully!");
+
+      // Refresh product list
+      fetchProducts();
+    } catch (error) {
+      console.error(error);
+      alert(
+        error.response?.data?.message ||
+          "Failed to delete product."
+      );
+    }
+  };
+
 return (
   <div className="min-h-screen bg-gray-100 p-8">
 
@@ -107,3 +170,6 @@ return (
 
   </div>
 );
+}
+
+export default ManageProducts;
