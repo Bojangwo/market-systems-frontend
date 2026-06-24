@@ -21,7 +21,7 @@ function ProductCard({ id, image, name, price }) {
   };
 
   return (
-  <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition duration-300 w-72">
+  <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition duration-300 w-full max-w-xs">
     <Link
       to={`/product/${id}`}
       className="block"

@@ -107,7 +107,18 @@ const handleCheckout = async () => {
             {cartItems.map((item) => (
               <div
                 key={item.product._id}
-                className="bg-white rounded-2xl shadow-md p-5 flex gap-5 items-center"
+                className="
+bg-white
+rounded-2xl
+shadow-md
+p-5
+flex
+flex-col
+md:flex-row
+gap-5
+items-center
+md:items-start
+"
               >
                 <img
                   src={

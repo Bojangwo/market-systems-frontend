@@ -55,29 +55,18 @@ const filteredProducts = products.filter((product) => {
   </div>
 </div>
 
-<div
-  style={{
-    textAlign: "center",
-    marginBottom: "20px",
-  }}
->
-  <label
-    style={{
-      marginRight: "10px",
-      fontWeight: "bold",
-    }}
-  >
+<div className="flex flex-col md:flex-row justify-center items-center gap-4 mb-8 px-4">
+
+  <label className="font-semibold">
     Category:
   </label>
 
   <select
     value={selectedCategory}
-    onChange={(e) => setSelectedCategory(e.target.value)}
-    style={{
-      padding: "10px",
-      borderRadius: "5px",
-      fontSize: "16px",
-    }}
+    onChange={(e) =>
+      setSelectedCategory(e.target.value)
+    }
+    className="border rounded-lg p-3 w-full md:w-64"
   >
     <option value="All">All</option>
     <option value="Food">Food</option>
@@ -85,6 +74,7 @@ const filteredProducts = products.filter((product) => {
     <option value="Fruits">Fruits</option>
     <option value="Vegetables">Vegetables</option>
   </select>
+
 </div>
 
       <section className="bg-gray-50 py-16">

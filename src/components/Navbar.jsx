@@ -48,7 +48,7 @@ useEffect(() => {
 
 return (
   <nav className="sticky top-0 z-50 bg-green-700 shadow-lg">
-    <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
       <Link
         to="/"
         className="text-2xl font-bold text-white hover:text-green-100 transition"
@@ -56,7 +56,7 @@ return (
         🌿 Organic Market
       </Link>
 
-      <div className="flex items-center gap-6">
+      <div className="flex flex-wrap items-center gap-4 justify-end">
         <Link
           to="/"
           className="text-white hover:text-green-200 transition"
