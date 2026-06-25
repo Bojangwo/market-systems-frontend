@@ -1,10 +1,11 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://market-systems-backend.onrender.com",
+  baseURL: "https://market-systems-backend.onrender.com/api",
 });
 
-export const IMAGE_URL = "http://localhost:5000/uploads";
+export const IMAGE_URL =
+  "https://market-systems-backend.onrender.com/uploads";
 
 // Automatically attach token to every request
 API.interceptors.request.use((config) => {
